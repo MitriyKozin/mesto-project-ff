@@ -70,5 +70,12 @@ const initialCards = [
   //--------------------------------принимает пареметр cardElement(элемент карточки)
   cardElement.remove(); //-------------------------------------------удаление элемента
 }
+//@todo: Вывести карточки на страницу✴️------------------------------placesList
+const placesList = document.querySelector('.places__list'); //-----выведите все карточки из массива на страницу в элемент places__list
+initialCards.forEach(function (cardData) {
+  //-----------------------функция проходит по каждому элементу в массиве "initialCards" с помощью метода "forEach"
+  const cardElement = createCard(cardData, deleteCard);
+  placesList.appendChild(cardElement); //----------------------------созданная карточка добавляется в список .places__list с помощью метода "appendChild;
+});
 
-// export { createCard, handleLikeClick, deleteCard };
+export { createCard, handleLikeClick, deleteCard };
