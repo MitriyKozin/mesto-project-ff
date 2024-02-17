@@ -19,8 +19,6 @@ function closePopup(popup) {
   popup.classList.remove('popup_is-animated');
 }, 600);
 popup.classList.remove('popup_is-opened'); 
-  // document.removeEventListener('click', closePopupByOverlay);  
-  // document.removeEventListener('keydown', closePopupByEscape);
 } 
 
 function closePopupByOverlay(evt) {              
@@ -30,7 +28,6 @@ function closePopupByOverlay(evt) {
     closePopup(popup);
   }
 }
-
 
 function closePopupByEscape(evt) {                
   //✴️ Функция закрытия попапа нажатием на Esc
