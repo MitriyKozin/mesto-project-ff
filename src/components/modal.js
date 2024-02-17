@@ -1,30 +1,40 @@
+// //✴️ Добавляем слушателя событий на документ который будет отслеживать нажатие клавиш на клавиатуре
+document.addEventListener('keydown', closePopupByEscape);
+document.addEventListener('click', closePopupByOverlay);
 
-function openPopup(popup) {
-  //✴️ Функция открытия попапа
+
+function openPopup(popup) { 
+  //✴️ Функция открытия попапа 
+  setTimeout(() => { 
   popup.classList.add('popup_is-opened');
-  // Добавляем обработчик клика по оверлею
-  popup.addEventListener('click', overlayClick);
-}
+  },0);
+  popup.classList.add('popup_is-animated');
+  document.addEventListener('click', closePopupByOverlay);  
+  document.addEventListener('keydown', closePopupByEscape);
+  } 
+ 
+function closePopup(popup) { 
+  //✴️ Функция закрытия попапа 
+  setTimeout(() => { 
+  popup.classList.remove('popup_is-animated');
+}, 600);
+popup.classList.remove('popup_is-opened'); 
+  // document.removeEventListener('click', closePopupByOverlay);  
+  // document.removeEventListener('keydown', closePopupByEscape);
+} 
 
-function closePopup(popup) {
-  //✴️ Функция закрытия попапа
-  popup.classList.remove('popup_is-opened');
-  // Удаляение обработчика клика по оверлею
-  popup.removeEventListener('click', overlayClick);
-}
-
-function overlayClick(evt) {
+function closePopupByOverlay(evt) {              
   //✴️  Функция закрытия попапа кликом на оверлей
-  if (evt.target === evt.currentTarget) {
-    const popup = evt.target;
+  const popup = evt.target;
+  if (popup.classList.contains('popup')) {
     closePopup(popup);
   }
 }
 
-function closingOnEsc(evt) {
+
+function closePopupByEscape(evt) {                
   //✴️ Функция закрытия попапа нажатием на Esc
   if (evt.key === 'Escape') {
-    //27
     const openedPopup = document.querySelector('.popup_is-opened');
     if (openedPopup) {
       closePopup(openedPopup);
@@ -32,4 +42,60 @@ function closingOnEsc(evt) {
   }
 }
 
-export { openPopup, closePopup, closingOnEsc };
+export { openPopup, closePopup };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function openPopup(popup) {
+//   //✴️ Функция открытия попапа 
+//   popup.addEventListener('click', closePopupByOverlay);  
+//   document.addEventListener('keydown', closePopupByEscape);
+//   popup.classList.add('popup_is-opened'); 
+// }
+ 
+// function closePopup(popup) {
+//   //✴️ Функция закрытия попапа 
+//   // document.removeEventListener('click', closePopupByOverlay);  
+//   // document.removeEventListener('keydown', closePopupByEscape);
+//   popup.classList.remove('popup_is-opened'); 
+// }
+
+// function closePopupByOverlay(evt){             
+//   //✴️  Функция закрытия попапа кликом на оверлей
+//   const popup = evt.target;
+//   // closePopup(popup);
+//   if (evt.target === evt.currentTarget) {
+//     const popup = evt.target;
+//     closePopup(popup);
+//   }
+// }
+// // }
+
+
+// function closePopupByEscape(evt) {               
+//   //✴️ Функция закрытия попапа нажатием на Esc
+//   if (evt.key === 'Escape') {
+//     const openedPopup = document.querySelector('.popup_is-opened');
+//     if (openedPopup) {
+//       closePopup(openedPopup);
+//     }
+//   }
+// }
+
+
+// export {openPopup, closePopup} ;
