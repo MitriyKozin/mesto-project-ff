@@ -1,6 +1,6 @@
 // //✴️ Добавляем слушателя событий на документ который будет отслеживать нажатие клавиш на клавиатуре
 document.addEventListener('keydown', closePopupByEscape);
-document.addEventListener('click', closePopupByOverlay);
+// document.addEventListener('click', closePopupByOverlay);
 
 
 function openPopup(popup) { 
@@ -12,14 +12,17 @@ function openPopup(popup) {
   document.addEventListener('click', closePopupByOverlay);  
   document.addEventListener('keydown', closePopupByEscape);
   } 
- 
-function closePopup(popup) { 
-  //✴️ Функция закрытия попапа 
-  setTimeout(() => { 
-  popup.classList.remove('popup_is-animated');
-}, 600);
-popup.classList.remove('popup_is-opened'); 
-} 
+
+  function closePopup(popup) {  
+    //✴️ Функция закрытия попапа 
+    popup.classList.remove('popup_is-opened'); 
+    setTimeout(() => {  
+    popup.classList.remove('popup_is-animated'); 
+  }, 600); 
+  document.removeEventListener('click', closePopupByOverlay);  
+  document.removeEventListener('keydown', closePopupByEscape);  
+  }  
+  
 
 function closePopupByOverlay(evt) {              
   //✴️  Функция закрытия попапа кликом на оверлей
