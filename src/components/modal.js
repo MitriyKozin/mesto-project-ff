@@ -1,7 +1,3 @@
-// //✴️ Добавляем слушателя событий на документ который будет отслеживать нажатие клавиш на клавиатуре
-document.addEventListener('keydown', closePopupByEscape);
-// document.addEventListener('click', closePopupByOverlay);
-
 
 function openPopup(popup) { 
   //✴️ Функция открытия попапа 
@@ -22,7 +18,6 @@ function openPopup(popup) {
   document.removeEventListener('click', closePopupByOverlay);  
   document.removeEventListener('keydown', closePopupByEscape);  
   }  
-  
 
 function closePopupByOverlay(evt) {              
   //✴️  Функция закрытия попапа кликом на оверлей
