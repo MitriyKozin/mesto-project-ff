@@ -15,8 +15,12 @@
   </header>
   <main class="content">
     <section class="profile page__section">
-      <div class="profile__image" style="background-image: url('<%=require('./images/avatar.jpg')%>');"></div>
-      <div class="profile__info">
+      <button class="profile__avatar-edit">
+        <div class="profile__image" style="background-image: url('<%=require('./images/avatar.jpg')%>');"></div>
+        <img class="profile__pencil-icon" src='<%=require("./images/Pencil.svg")%>' alt="Карандаш редактирования аватара профиля">
+      </button>     
+      <!-- <div class="profile__image" style="background-image: url('<%=require('./images/avatar.jpg')%>');"></div>   -->
+          <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
         <button class="profile__edit-button" type="button"></button>
         <p class="profile__description">Исследователь океана</p>
@@ -33,25 +37,44 @@
       © 2021 Mesto Russia
     </p>
   </footer>
-  <div class="popup popup_type_edit">
+  <div class="popup popup_type_avatar">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
-      <h3 class="popup__title">Редактировать профиль</h3>
-      <form class="popup__form" name="edit-profile">
-        <input type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" required>
-        <input type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" required>
-        <!--Можно добавить required, они про него знают-->
+      <h3 class="popup__title">Обновить аватар</h3>
+      <form class="popup__form" name="avatar-form">
+        <input type="url"  id="Avatar-input" name="link" class="popup__input popup__input_type_avatar-link" placeholder="Ссылка на новый аватар" required>
+        <span class="popup__input_type_error avatar__input_type_error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
   </div>
+  <div class="popup popup_type_edit">
+    <div class="popup__content">
+      <button type="button" class="popup__close"></button>
+      <h3 class="popup__title">Редактировать профиль</h3>
+      <form class="popup__form" name="edit-profile" novalidate> 
+        <!-- Ошибка ввода неправильных символов проподает после добавления любого второго символа. Вернуться!!! -->
+        <input id="name-input" type="text" name="name" class="popup__input popup__input_type_name" placeholder="Имя" minlength='2' maxlength='40' required
+        pattern="^[a-zA-Zа-яёА-ЯЁ\s\-]+$">
+        <span class="popup__input_type_error name__input_type_error"></span>
+        <input id="description-input" type="text" name="description" class="popup__input popup__input_type_description" placeholder="Занятие" minlength='2' maxlength='200' required 
+        pattern="^[a-zA-Zа-яёА-ЯЁ\s\-]+$">
+        <span class="popup__input_type_error description__input_type_error" ></span>
+        <!-- Можно добавить required, они про него знают  -->
+        <button type="submit" class="button popup__button">Сохранить</button>
+      </form>
+    </div>
+  </div>  
   <div class="popup popup_type_new-card">
     <div class="popup__content">
       <button type="button" class="popup__close"></button>
       <h3 class="popup__title">Новое место</h3>
-      <form class="popup__form" name="new-place">
-        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" required>
+      <form class="popup__form" name="new-place" novalidate>
+        <input type="text" name="place-name" class="popup__input popup__input_type_card-name" placeholder="Название" minlength='2' maxlength='30' required
+        pattern="^[a-zA-Zа-яёА-ЯЁ\s\-]+$">
+        <span class="popup__input_type_error mesto__input_type_error"></span>
         <input type="url" name="link" class="popup__input popup__input_type_url" placeholder="Ссылка на картинку" required>
+        <span class="popup__input_type_error url__input_type_error"></span>
         <button type="submit" class="button popup__button">Сохранить</button>
       </form>
     </div>
@@ -69,7 +92,6 @@
 <!-- <script src="./components/modal.js"></script> -->
 <!-- <script src="./index.js" defer></script> -->
 
-
 <!--Относится к реализации 4-го спринта-->
 <template id="card-template">
   <!--Про тег темплейт студенты узнают из уроков 4-го спринта-->
@@ -80,7 +102,10 @@
     <div class="card__description">
       <h2 class="card__title">
       </h2>
+      <div class="card__container-like-counter">
       <button type="button" class="card__like-button"></button>
+      <span class="card__like-count">0</span> 
+      </div>
     </div>
   </li>
 </template>

@@ -13,6 +13,30 @@
 .popup__input:last-of-type {
   margin-bottom: 0;
 }
+/*текст ошибки*/
+.popup__input-error_active {
+/* color: red; */
+}
+ 
+.popup__error_visible {
+  /* color: red; */
+  /* border-bottom: 2px solid red; */
+}
+
+
+
+
+
+
+.popup__input_type_error {
+  /* border-bottom: 2px solid red; */
+  color: red;
+}
+
+/*линия под полем с ошибкой 0001*/
+.popup__input-invalid {
+  border-bottom: 2px solid red;
+}
 
 @media screen and (max-width: 568px) {
   .popup__title {

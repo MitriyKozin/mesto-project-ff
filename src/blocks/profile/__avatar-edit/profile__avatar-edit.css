@@ -1,0 +1,19 @@
+.profile__avatar-edit {
+  border-radius: 50%;
+  outline: none;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  opacity: 1;
+}
+
+.profile__avatar-edit:hover .profile__pencil-icon {
+  opacity: 1;
+}
+
+.profile__avatar-edit:hover .profile__image {
+  opacity: 0.6;
+  transition: 0.3s;
+}

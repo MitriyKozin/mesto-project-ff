@@ -19,6 +19,20 @@
   cursor: pointer;
 }
 
+.popup__button:disabled {
+  /* cursor: not-allowed; */
+  background-color: #fff;
+  border: 1px solid #999;
+  color: #999
+}
+
+.popup__button_disabled {
+  /* cursor: not-allowed; */
+  background-color: #fff;
+  border: 1px solid #999;
+  color: #999
+}
+
 @media screen and (max-width: 568px) {
   .popup__button {
     font-size: 14px;

@@ -5,6 +5,9 @@
 @import url('./__title/profile__title.css');
 @import url('./__image/profile__image.css');
 
+@import url('./__avatar-edit/profile__avatar-edit.css');
+@import url('./__pencil-icon/profile__pencil-icon.css');
+
 .profile {
   font-family: 'Inter', Arial, sans-serif;
   color: #fff;

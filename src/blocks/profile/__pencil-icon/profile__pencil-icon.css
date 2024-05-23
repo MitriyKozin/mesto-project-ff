@@ -1,0 +1,8 @@
+.profile__pencil-icon {
+  position: absolute;
+  opacity: 0;
+  transition: opacity 0.3s;
+  transform: translate(-27px, -74px);
+}
+
+
