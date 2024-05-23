@@ -18,6 +18,19 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
     deleteCardCallback(cardElement);
   });
 
+// // const deleteButton = cardElement.querySelector('.card__delete-button');
+// deleteButton.addEventListener('click', function() {
+//     // Открываем попап удаления
+//     openDeletePopup(cardElement);
+// });
+
+// if (cardData.owner._id === userId) {
+//     deleteButton.style.display = 'block';
+// } else {
+//     deleteButton.style.display = 'none';
+// }
+
+
   const likeCount = cardElement.querySelector('.card__like-count');
   likeCount.textContent = cardData.likes ? cardData.likes.length : 0; 
   likeCard.addEventListener('click', function(event) {
@@ -47,12 +60,6 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
   return cardElement;
 }
 
-// function deleteCardCallback(cardElement) {
-//   if (cardElement.parentNode) {
-//     cardElement.parentNode.removeChild(cardElement);
-//   }
-// }
-
 function deleteCardCallback(cardElement, cardId) {
   deleteCard(cardId)
     .then(() => {
@@ -63,20 +70,14 @@ function deleteCardCallback(cardElement, cardId) {
     .catch((err) => console.log(err));
 }
 
-  // function handleLikeClick(event, likeCount, cardData, userId) {
-  //   const likeButton = event.target;
-  //   likeButton.classList.toggle('card__like-button_is-active');
-  // }
-
   function handleLikeClick(event, likeCount, cardData, userId) {
     const likeButton = event.target;
-    const isLiked = cardData.likes.some(like => like._id === userId); // Исправлено: like._id вместо like.name
+    const isLiked = cardData.likes.some(like => like._id === userId);
    
     if (isLiked) {
       // Удалить лайк
       cardData.likes = cardData.likes.filter(like => like.name !== userId);
     } else {
-      // Добавить лайк
       cardData.likes.push({ name: userId });
     }
 
@@ -91,7 +92,7 @@ function deleteCardCallback(cardElement, cardId) {
         // Переключение активного состояния кнопки лайка
         likeButton.classList.toggle('card__like-button_is-active');
       })
-      .catch((err) => console.log(err)); // Не забудьте обработать ошибки
+      .catch((err) => console.log(err)); 
   }
   
 
