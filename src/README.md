@@ -1,4 +1,4 @@
-# Проектная работа в GitHub: Mesto
+* Проектная работа в GitHub: Mesto
 # https://github.com/MitriyKozin/mesto-project-ff
-# Страница проекта
+* Страница проекта
 # https://MitriyKozin.github.io/mesto-project-ff
