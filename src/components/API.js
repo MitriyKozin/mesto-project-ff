@@ -8,24 +8,14 @@ const config = {
 };
 
 // Функция для получения всех карточек
-export const getInitialCards = (token) => {
+export const getInitialCards = () => {
   return fetch(`${config.BASE_URL}/cards`, {
     headers: {
       method: 'GET',
-      authorization: token,
+      authorization: config.headers.authorization, 
     },
   }).then(handleResponse);
 };
-
-// // Функция для получения информации о пользователе
-// export const getUserData = (token) => {
-//   return fetch(`${config.BASE_URL}/users/me`, {
-//     headers: {
-//       method: 'GET',
-//       authorization: token,
-//     },
-//   }).then(handleResponse);
-// };
 
 // Функция для получения информации о пользователе
 export const getUserData = () => {
@@ -53,7 +43,7 @@ export const addCard = (name, link) => {
     method: 'POST',
     headers: config.headers,
     body: JSON.stringify({
-      name: name,
+      name: name, //plase-name
       link: link,
     }),
   }).then(handleResponse);

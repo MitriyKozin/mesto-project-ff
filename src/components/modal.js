@@ -21,9 +21,9 @@ function openPopup(popup) {
 
 function closePopupByOverlay(evt) {              
   //✴️  Функция закрытия попапа кликом на оверлей
-  const popup = evt.target;
-  if (popup.classList.contains('popup')) {
-    closePopup(popup);
+  const element = evt.target;
+  if (element.classList.contains('popup')) {
+    closePopup(element);
   }
 }
 
