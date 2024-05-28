@@ -187,7 +187,6 @@ editAvatar.addEventListener('click', () => {
   clearValidation(avatarForm, validationConfig);
 })
 
-
 const token = '37a3c59e-17a1-445c-bd60-3082d57222e3';
 
 window.addEventListener('DOMContentLoaded', function () {

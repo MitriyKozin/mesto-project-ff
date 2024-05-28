@@ -9,7 +9,6 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
   const cardTitle = cardElement.querySelector('.card__title'); 
   const deleteButton = cardElement.querySelector('.card__delete-button'); 
   const likeCard = cardElement.querySelector('.card__like-button'); 
-
   cardTitle.textContent = cardData.name; 
   cardImage.alt = cardData.name; 
   cardImage.src = cardData.link; 
@@ -31,10 +30,6 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
     deleteButton.addEventListener('click', function() { 
       deleteCardCallback(cardElement, cardData._id); 
     }); 
-  } 
-  const isLiked = cardData.likes.some(like => like._id === userId); 
-  if (isLiked) { 
-    likeCard.classList.add('card__like-button_is-active');  
   } 
 
   likeCard.addEventListener('click', function(event) { 
