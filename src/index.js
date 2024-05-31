@@ -1,19 +1,10 @@
 import './pages/index.css';
 import { openPopup, closePopup } from './components/modal.js';
-import { createCard, deleteCardCallback, handleLikeClick } from './components/card.js';
+import { createCard, deleteCardCallback,  handleLikeClick } from './components/card.js';
 import { getUserData, getInitialCards, editUserProfile, addCard, updateUserAvatar } from './components/API.js';
 import { enableValidation, clearValidation } from './components/validation.js';
+import { validationConfig } from './components/validation-config.js';
 
-const validationConfig = {
-  formSelector: '.popup__form',
-  inputSelector: '.popup__input',
-  submitButtonSelector: '.popup__button',
-  inactiveButtonClass: 'popup__button_disabled',
-  inputErrorClass: 'popup__input_type_error',
-  errorClass: 'popup__error_visible'
-};
-
-// Включение валидации
 enableValidation(validationConfig);
 
 const placesList = document.querySelector('.places__list');
@@ -42,19 +33,20 @@ const jobInput = profileForm.querySelector('.popup__input_type_description');
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  const newName = nameInput.value;
-  const newJob = jobInput.value;
-
-  // Вызов функции editUserProfile для обновления профиля на сервере
-  editUserProfile(newName, newJob)
+    setButtonMessage(editSaveButton, 'Сохранение...');
+  editUserProfile(nameInput.value, jobInput.value)
     .then((userData) => {
-      // Обновление профиля пользователя на странице
       profileTitle.textContent = userData.name;
       profileDesc.textContent = userData.about;
       closePopup(editPopup);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => console.log(err))
+    .finally(() => {
+      setButtonMessage(editSaveButton, 'Сохранить');
+    });
 }
+
+
 // ✴️ Прикрепляем обработчик к форме:
 profileForm.addEventListener('submit', handleProfileFormSubmit);
 
@@ -96,21 +88,6 @@ avatarForm.addEventListener('submit', function (evt) {
     });
 });
 
-profileForm.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-  setButtonMessage(editSaveButton, 'Сохранение...');
-  editUserProfile(profileTitle, profileDesc)
-    .then((userData) => {
-      profileTitle.textContent = userData.name;
-      profileDesc.textContent = userData.about;
-      closePopup(editPopup);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      setButtonMessage(editSaveButton, 'Сохранить');
-    });
-});
-
 const addButton = document.querySelector('.profile__add-button');
 const newCardPopup = document.querySelector('.popup_type_new-card');
 const newCardSaveButton = newCardPopup.querySelector('.popup__button')
@@ -133,8 +110,8 @@ newCardForm.addEventListener('submit', function (evt) {
   setButtonMessage(newCardSaveButton, 'Сохранение...');
 
   addCard(titleValue, linkValue)
-    .then((cardData) => {
-      const newCard = createCard(cardData, deleteCardCallback, handleLikeClick, handleImageClick);
+    .then((cardData, userId) => { //, userId
+      const newCard = createCard(cardData, userId, deleteCardCallback, handleLikeClick, handleImageClick );
       placesList.prepend(newCard);
       newCardForm.reset();
       closePopup(newCardPopup);
@@ -165,7 +142,6 @@ imageCloseButton.addEventListener('click', () =>
 
 editButton.addEventListener('click', () => {
   openPopup(editPopup);
-  profileForm.reset();
   clearValidation(profileForm, validationConfig);
 });
 
@@ -187,10 +163,10 @@ editAvatar.addEventListener('click', () => {
   clearValidation(avatarForm, validationConfig);
 })
 
-const token = '37a3c59e-17a1-445c-bd60-3082d57222e3';
+// const token = '37a3c59e-17a1-445c-bd60-3082d57222e3';
 
 window.addEventListener('DOMContentLoaded', function () {
-  Promise.all([getInitialCards(token), getUserData(token)]).then(
+  Promise.all([getInitialCards(), getUserData()]).then(
     ([cards, user]) => {
       console.log(cards, user);
       const profileImage = document.querySelector('.profile__image');
@@ -199,25 +175,9 @@ window.addEventListener('DOMContentLoaded', function () {
       profileDesc.textContent = user.about;
 
       cards.forEach(function (cardData) {
-        const cardElement = createCard(
-          cardData,
-          user._id,
-          () => deleteCardCallback(cardElement, cardData._id),
-          handleLikeClick,
-          handleImageClick
-        );
+      const cardElement = createCard(cardData, user._id,
+         deleteCardCallback, handleLikeClick, handleImageClick, handleImageClick );
         placesList.appendChild(cardElement);
-        // Привязываем обработчики к каждой карточке
-        cardElement
-          .querySelector('.card__like-button')
-          .addEventListener('click', function (event) {
-            handleLikeClick(event);
-          });
-        cardElement
-          .querySelector('.card__image')
-          .addEventListener('click', function () {
-            handleImageClick(cardData.name, cardData.link);
-          });
       });
     }
   )

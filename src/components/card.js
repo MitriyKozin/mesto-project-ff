@@ -8,14 +8,20 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
   const cardImage = cardElement.querySelector('.card__image'); 
   const cardTitle = cardElement.querySelector('.card__title'); 
   const deleteButton = cardElement.querySelector('.card__delete-button'); 
+
+  if (cardData.owner._id === userId) { 
+    deleteButton.style.display = 'block'; 
+  } else { 
+    deleteButton.style.display = 'none'; 
+  } 
   const likeCard = cardElement.querySelector('.card__like-button'); 
   cardTitle.textContent = cardData.name; 
   cardImage.alt = cardData.name; 
   cardImage.src = cardData.link; 
 
-  deleteButton.addEventListener('click', function() { 
-    deleteCardCallback(cardElement, cardData._id);
-  });
+  const likeButton = cardElement.querySelector('.card__like-button');
+  const isLiked = cardData.likes.some(like => like._id === userId);
+  likeButton.classList.toggle('card__like-button_is-active', isLiked);
 
   const likeCount = cardElement.querySelector('.card__like-count'); 
   likeCount.textContent = cardData.likes ? cardData.likes.length : 0;  
@@ -23,19 +29,17 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
     handleLikeClick(event, likeCount, cardData, userId); 
   });
 
-  if (cardData.owner._id === userId) { 
-    deleteButton.style.display = 'block'; 
-  } else { 
-    deleteButton.style.display = 'none'; 
+
+
+  // if (cardData.owner._id === userId) { 
+  //   deleteButton.style.display = 'block'; 
     deleteButton.addEventListener('click', function() { 
       deleteCardCallback(cardElement, cardData._id); 
     }); 
-  } 
+  // } else { 
+  //   deleteButton.style.display = 'none'; 
+  // } 
 
-  likeCard.addEventListener('click', function(event) { 
-    handleLikeClick(event, likeCount, cardData, userId); 
-  });
-  
   cardImage.addEventListener('click', () => handleImageClick(cardData.name, cardData.link));
 
   return cardElement; 
@@ -75,3 +79,8 @@ function handleLikeClick(event, likeCount, cardData, userId) {
   }
 
 export { createCard, deleteCardCallback, handleLikeClick };
+
+
+
+
+

@@ -10,8 +10,8 @@ const config = {
 // Функция для получения всех карточек
 export const getInitialCards = () => {
   return fetch(`${config.BASE_URL}/cards`, {
+    method: 'GET',
     headers: {
-      method: 'GET',
       authorization: config.headers.authorization, 
     },
   }).then(handleResponse);

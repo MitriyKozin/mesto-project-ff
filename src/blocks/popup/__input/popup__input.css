@@ -15,18 +15,13 @@
 }
 /*текст ошибки*/
 .popup__input-error_active {
-/* color: red; */
+color: red;
 }
  
 .popup__error_visible {
   /* color: red; */
   /* border-bottom: 2px solid red; */
 }
-
-
-
-
-
 
 .popup__input_type_error {
   /* border-bottom: 2px solid red; */
