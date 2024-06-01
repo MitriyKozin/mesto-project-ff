@@ -1,7 +1,7 @@
 import './pages/index.css';
 import { openPopup, closePopup } from './components/modal.js';
 import { createCard, deleteCardCallback,  handleLikeClick } from './components/card.js';
-import { getUserData, getInitialCards, editUserProfile, addCard, updateUserAvatar } from './components/API.js';
+import { userData, getUserData, getInitialCards, editUserProfile, addCard, updateUserAvatar } from './components/API.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 import { validationConfig } from './components/validation-config.js';
 
@@ -109,17 +109,18 @@ newCardForm.addEventListener('submit', function (evt) {
 
   setButtonMessage(newCardSaveButton, 'Сохранение...');
 
-  addCard(titleValue, linkValue)
-    .then((cardData, userId) => { //, userId
-      const newCard = createCard(cardData, userId, deleteCardCallback, handleLikeClick, handleImageClick );
-      placesList.prepend(newCard);
-      newCardForm.reset();
-      closePopup(newCardPopup);
-    })
-    .catch((err) => console.log(err))
-    .finally(() => {
-      setButtonMessage(newCardSaveButton, 'Сохранить');
-    });
+addCard(titleValue, linkValue) 
+  .then((cardData) => {  // , userId) => {...
+
+    const newCard = createCard(cardData, userData._id, deleteCardCallback, handleLikeClick, handleImageClick);
+    placesList.prepend(newCard);  // cardData, userId,...
+    newCardForm.reset();
+    closePopup(newCardPopup);
+  })
+  .catch((err) => console.log(err))
+  .finally(() => {
+    setButtonMessage(newCardSaveButton, 'Сохранить');
+  });
 });
 
 function handleImageClick(name, link) {

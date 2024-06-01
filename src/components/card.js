@@ -4,6 +4,10 @@ import { deleteCard, addLike, removeLike } from "./API.js";
 const cardTemplate = document.querySelector('#card-template').content.querySelector('.card'); 
 
 function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handleImageClick) {
+
+  // console.log('UserID:', userId); // отладка
+  // console.log('Card Owner ID:', cardData.owner._id); //отладка
+
   const cardElement = cardTemplate.cloneNode(true); 
   const cardImage = cardElement.querySelector('.card__image'); 
   const cardTitle = cardElement.querySelector('.card__title'); 
@@ -11,6 +15,9 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
 
   if (cardData.owner._id === userId) { 
     deleteButton.style.display = 'block'; 
+    deleteButton.addEventListener('click', function() { 
+      deleteCardCallback(cardElement, cardData._id); 
+    }); 
   } else { 
     deleteButton.style.display = 'none'; 
   } 
@@ -29,16 +36,14 @@ function createCard(cardData, userId, deleteCardCallback, handleLikeClick, handl
     handleLikeClick(event, likeCount, cardData, userId); 
   });
 
-
-
-  // if (cardData.owner._id === userId) { 
-  //   deleteButton.style.display = 'block'; 
+  if (cardData.owner._id === userId) { 
+    deleteButton.style.display = 'block'; 
     deleteButton.addEventListener('click', function() { 
       deleteCardCallback(cardElement, cardData._id); 
     }); 
-  // } else { 
-  //   deleteButton.style.display = 'none'; 
-  // } 
+  } else { 
+    deleteButton.style.display = 'none'; 
+  } 
 
   cardImage.addEventListener('click', () => handleImageClick(cardData.name, cardData.link));
 
