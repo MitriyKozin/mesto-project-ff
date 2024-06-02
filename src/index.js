@@ -1,9 +1,11 @@
 import './pages/index.css';
 import { openPopup, closePopup } from './components/modal.js';
 import { createCard, deleteCardCallback,  handleLikeClick } from './components/card.js';
-import { userData, getUserData, getInitialCards, editUserProfile, addCard, updateUserAvatar } from './components/API.js';
+import { getUserData, getInitialCards, editUserProfile, addCard, updateUserAvatar } from './components/API.js';
 import { enableValidation, clearValidation } from './components/validation.js';
 import { validationConfig } from './components/validation-config.js';
+
+let userId;
 
 enableValidation(validationConfig);
 
@@ -109,18 +111,22 @@ newCardForm.addEventListener('submit', function (evt) {
 
   setButtonMessage(newCardSaveButton, 'Сохранение...');
 
-addCard(titleValue, linkValue) 
-  .then((cardData) => {  // , userId) => {...
-
-    const newCard = createCard(cardData, userData._id, deleteCardCallback, handleLikeClick, handleImageClick);
-    placesList.prepend(newCard);  // cardData, userId,...
-    newCardForm.reset();
-    closePopup(newCardPopup);
-  })
-  .catch((err) => console.log(err))
-  .finally(() => {
-    setButtonMessage(newCardSaveButton, 'Сохранить');
-  });
+  addCard(titleValue, linkValue)
+    .then((cardData) => {
+      if (!userId) {
+        throw new Error('UserID не доступен');
+      }
+      const newCard = createCard(cardData, userId, deleteCardCallback, handleLikeClick, handleImageClick);
+      placesList.prepend(newCard);
+      newCardForm.reset();
+      closePopup(newCardPopup);
+    })
+    .catch((err) => {
+      console.error(err);
+    })
+    .finally(() => {
+      setButtonMessage(newCardSaveButton, 'Сохранить');
+    });
 });
 
 function handleImageClick(name, link) {
@@ -164,23 +170,19 @@ editAvatar.addEventListener('click', () => {
   clearValidation(avatarForm, validationConfig);
 })
 
-// const token = '37a3c59e-17a1-445c-bd60-3082d57222e3';
-
 window.addEventListener('DOMContentLoaded', function () {
-  Promise.all([getInitialCards(), getUserData()]).then(
-    ([cards, user]) => {
+  Promise.all([getInitialCards(), getUserData()])
+    .then(([cards, user]) => {
+      userId = user._id;
       console.log(cards, user);
       const profileImage = document.querySelector('.profile__image');
       profileImage.style.backgroundImage = `url(${user.avatar})`;
       profileTitle.textContent = user.name;
       profileDesc.textContent = user.about;
-
-      cards.forEach(function (cardData) {
-      const cardElement = createCard(cardData, user._id,
-         deleteCardCallback, handleLikeClick, handleImageClick, handleImageClick );
+      cards.forEach((cardData) => {
+        const cardElement = createCard(cardData, userId, deleteCardCallback, handleLikeClick, handleImageClick);
         placesList.appendChild(cardElement);
       });
-    }
-  )
+    })
   .catch((err) => console.log(err));
 });

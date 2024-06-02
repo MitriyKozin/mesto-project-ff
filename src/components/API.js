@@ -7,7 +7,7 @@ const config = {
   },
 };
 
-export const userData = { _id: 'ae1090f3a727551f619497b7'};
+// export const userData = { _id: 'ae1090f3a727551f619497b7'};
 
 // Функция для получения всех карточек
 export const getInitialCards = () => {
